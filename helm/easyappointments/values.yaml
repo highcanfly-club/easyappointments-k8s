@@ -1,0 +1,86 @@
+#########################################################################
+# © Ronan LE MEILLAT 2023
+# released under the GPLv3 terms
+#########################################################################
+
+deploymentEasyappointment:
+  image: highcanfly/easyappointments
+  imageTag: latest
+  googleSync: 'FALSE'
+  dbusername: root
+  dbname: easyappointments
+  dbhost: mysql
+  debug: 'TRUE'
+  language: english
+  baseUrl: 'http://localhost:8888'
+pvcEasyappointments:
+  storage: 1Gi
+ingressEasyappointments:
+  ingressClassName: nginx
+  host: easyappointments.cluster.local
+  clusterIssuer: cert-ca-issuer
+serviceEasyappointment:
+  port: 8888
+secretMysql:
+  root: cGFzc3dvcmQ=
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+service:
+  test-port: 80

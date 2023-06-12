@@ -1,0 +1,20 @@
+#########################################################################
+# © Ronan LE MEILLAT 2023
+# released under the GPLv3 terms
+#########################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: mysql
+  name: mysql
+spec:
+  type: ClusterIP
+  ports:
+    - name: '3306'
+      port: 3306
+      targetPort: 3306
+  selector:
+    io.kompose.service: mysql
+status:
+  loadBalancer: {}
