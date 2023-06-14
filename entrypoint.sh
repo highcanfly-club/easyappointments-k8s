@@ -16,7 +16,16 @@ GOOGLE_PRODUCT_NAME=${GOOGLE_PRODUCT_NAME:-''}
 GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-''}
 GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-''}
 GOOGLE_API_KEY=${GOOGLE_API_KEY:-''}
-
+MAIL_USERAGENT=${MAIL_USERAGENT:-'HCF!Schedule'}
+MAIL_PROTOCOL=${MAIL_PROTOCOL:-'smtp'}
+MAIL_TYPE=${MAIL_TYPE:-'html'}
+MAIL_SMTP_DEBUG=${MAIL_SMTP_DEBUG:-'1' }
+MAIL_SMTP_AUTH=${MAIL_SMTP_AUTH:-'FALSE'}
+MAIL_SMTP_HOST=${MAIL_SMTP_HOST:-'smtpd'}
+MAIL_SMTP_USER=${MAIL_SMTP_USER:-''}
+MAIL_SMTP_PASS=${MAIL_SMTP_PASS:-''}
+MAIL_SMTP_CRYPTO=${MAIL_SMTP_CRYPTO:-''}
+MAIL_SMTP_PORT=${MAIL_SMTP_PORT:-'25'}
 
 cat << EOF > /var/www/html/config.php
 <?php
@@ -51,5 +60,17 @@ class Config {
 }
 ?>
 EOF
-
+cat << EOF > /var/www/html/application/config/email.php
+<?php defined('BASEPATH') or exit('No direct script access allowed');
+\$config['useragent'] = '$MAIL_USERAGENT';
+\$config['protocol'] = '$MAIL_PROTOCOL';
+\$config['mailtype'] = '$MAIL_TYPE';
+\$config['smtp_debug'] = '$MAIL_SMTP_DEBUG'; 
+\$config['smtp_auth'] = $MAIL_SMTP_AUTH;
+\$config['smtp_host'] = '$MAIL_SMTP_HOST';
+\$config['smtp_user'] = '$MAIL_SMTP_USER';
+\$config['smtp_pass'] = '$MAIL_SMTP_PASS';
+\$config['smtp_crypto'] = '$MAIL_SMTP_CRYPTO'; 
+\$config['smtp_port'] = $MAIL_SMTP_PORT;
+EOF
 apache2-foreground
