@@ -42,9 +42,7 @@ spec:
             - containerPort: 3306
               protocol: TCP
           resources:
-            limits:
-              cpu: '1'
-              memory: 2Gi
+            {{- toYaml .Values.mysql.resources | nindent 12 }}
           securityContext:
             runAsGroup: 0
             runAsUser: 0

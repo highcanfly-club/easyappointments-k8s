@@ -59,9 +59,7 @@ spec:
             - containerPort: 8888
               protocol: TCP
           resources:
-            limits:
-              cpu: '2'
-              memory: 1Gi
+            {{- toYaml .Values.deploymentEasyappointment.resources | nindent 12 }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
